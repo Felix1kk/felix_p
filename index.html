@@ -332,45 +332,45 @@
   </div>
 
   <!-- Modal template -->
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-card">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <h2 id="modal-title">Project Title</h2>
-        <div class="modal-close" onclick="closeModal()">✕</div>
-      </div>
-      <div id="modal-body" style="color:var(--muted);margin-top:12px">Project details…</div>
-    </div>
-  </div>
-
-  <script>
-    // small UX: open modal with full project text
-    document.querySelectorAll('.proj').forEach(el=>{
-      el.addEventListener('click',()=>{
-        const data = JSON.parse(el.getAttribute('data-proj'));
-        document.getElementById('modal-title').innerText = data.title;
-        document.getElementById('modal-body').innerHTML = `
-          <p style=\"color:var(--muted)\">${data.desc}</p>
-          <p style=\"margin-top:10px;\"><strong>Tech:</strong> ${data.tech}</p>
-        `;
-        document.getElementById('modal').classList.add('open');
-      })
-    })
-    function closeModal(){document.getElementById('modal').classList.remove('open')}
-
+    <script>
     // small reveal animation
-    document.querySelectorAll('.fadein').forEach((el,i)=>{setTimeout(()=>{el.style.opacity=1;el.style.transform='none';el.classList.remove('fadein')},120*i)})
-
-    // simple typed effect (no lib)
+    document.querySelectorAll('.fadein').forEach((el,i)=>{
+      setTimeout(()=>{
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+        el.classList.remove('fadein');
+      }, 120 * i);
+    });
+  
+    // simple typed effect (no lib) – currently not used because there's no .typed element,
+    // but safe to keep for later if you add it.
     const typedEl = document.querySelector('.typed');
-    if(typedEl){
-      const words = ['AI Engineer','Data Scientist','Startup Builder']
-      let i=0,j=0,cur='';
-      function type(){
-        if(j<words[i].length){cur+=words[i][j++];typedEl.innerText=cur;setTimeout(type,80)}else{setTimeout(()=>{erase()},900)}
+    if (typedEl) {
+      const words = ['AI Engineer','Data Scientist','Startup Builder'];
+      let i = 0, j = 0, cur = '';
+      function type() {
+        if (j < words[i].length) {
+          cur += words[i][j++];
+          typedEl.innerText = cur;
+          setTimeout(type, 80);
+        } else {
+          setTimeout(()=>{ erase(); }, 900);
+        }
       }
-      function erase(){if(cur.length){cur=cur.slice(0,-1);typedEl.innerText=cur;setTimeout(erase,40)}else{i=(i+1)%words.length;j=0;setTimeout(type,200)} }
+      function erase() {
+        if (cur.length) {
+          cur = cur.slice(0, -1);
+          typedEl.innerText = cur;
+          setTimeout(erase, 40);
+        } else {
+          i = (i + 1) % words.length;
+          j = 0;
+          setTimeout(type, 200);
+        }
+      }
       type();
     }
   </script>
+
 </body>
 </html>
