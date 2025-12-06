@@ -1,0 +1,376 @@
+<!--
+  Felix Portfolio - Recruiter-friendly aesthetic template (HTML/CSS/JS)
+  Instructions:
+  1. Replace placeholder text (name, bio, links) with your own.
+  2. Replace project images (assets/) with your screenshots/GIFs.
+  3. Add Credly badges: use the Credly "Share" / public image URL or export badge image, then add a link to the Credly verification URL. See example below in the BADGES section.
+  4. Host on GitHub Pages: push this file (index.html) and an 'assets' folder to your repo and enable Pages on the repo settings.
+
+  Credly badge example (replace the URLs):
+  <a href="https://www.credly.com/badges/VERIFY_LINK" target="_blank" rel="noopener">
+    <img src="assets/credly-badge-1.png" alt="Google Data Analytics Badge" class="badge-img">
+  </a>
+
+  Notes on images: compress screenshots (jpg/webp) and keep under 200KB where possible.
+-->
+
+<!doctype html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Felix Nwokekeh | AI Engineer & Data Scientist Portfolio</title>
+  <meta name="description" content="Portfolio of Felix Nwokekeh, AI & Data Science Engineer. I build AI solutions for healthcare, research, and business — from MRI analysis tools to RAG-based assistants and predictive models." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#00d4ff; /* cyan */
+      --accent-2:#ffd166; /* warm yellow */
+      --glass: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial; margin:0; background:linear-gradient(180deg,var(--bg),#08101a); color:#e6eef8; -webkit-font-smoothing:antialiased;}
+    .container{max-width:1100px;margin:40px auto;padding:0 20px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#08101a; animation: glow 3s ease-in-out infinite alternate;}
+    @keyframes glow{from{box-shadow:0 0 12px var(--accent)}to{box-shadow:0 0 24px var(--accent-2)}}
+    .title{line-height:1}
+    .title h1{margin:0;font-size:20px}
+    .title p{margin:0;color:var(--muted);font-size:13px}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center;margin-top:20px}
+    .hero-left h2{font-size:28px;margin:0}
+    .typed{color:var(--accent);font-weight:700}
+    .hero-left p{color:var(--muted);line-height:1.6}
+    .cta{margin-top:18px}
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#08101a;font-weight:700;text-decoration:none;margin-right:10px;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+    .secondary{border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);text-decoration:none}
+
+    /* Card */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);}
+
+    /* Featured projects */
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+    .proj{border-radius:12px;overflow:hidden;position:relative;background:var(--card);transition:transform .2s, box-shadow .2s}
+    .proj:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(2,6,23,0.6)}
+    .proj img{width:100%;height:170px;object-fit:cover;display:block}
+    .proj-body{padding:14px}
+    .proj h3{margin:0 0 6px 0;color:#fff}
+    .proj p{margin:0;color:var(--muted);font-size:13px}
+    .tags{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:var(--glass);padding:6px 8px;border-radius:8px;color:var(--muted);font-size:12px}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .18s}
+    .modal.open{visibility:visible;opacity:1}
+    .modal-card{width:min(920px,94%);background:#07111a;border-radius:12px;padding:20px}
+    .modal-card h2{margin-top:0}
+    .modal-close{position:absolute;right:24px;top:18px;color:var(--muted);cursor:pointer}
+
+    /* Badges */
+    .badges{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .badge-img{height:56px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
+
+    /* Other projects */
+    .other{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .other .small{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);font-size:13px;color:var(--muted)}
+
+    /* Footer */
+    footer{margin-top:40px;padding:30px 0;text-align:center;color:var(--muted)}
+
+    /* Responsive */
+    @media(max-width:980px){.hero{grid-template-columns:1fr;}.projects{grid-template-columns:repeat(2,1fr)}.other{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.projects{grid-template-columns:1fr}.other{grid-template-columns:1fr}}
+
+    /* small animations */
+    .fadein{opacity:0;transform:translateY(12px);animation:fadeup .6s forwards}
+    @keyframes fadeup{to{opacity:1;transform:none}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo">FN</div>
+        <div class="title">
+          <h1>Felix Nwokekeh</h1>
+          <p>AI Engineer • Data Scientist • Healthcare & Research AI</p>
+        </div>
+      </div>
+
+      
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="https://github.com/Felix1kk" target="_blank" rel="noopener">GitHub</a>
+        <a href="#badges">Badges</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div style="margin-top:18px" class="fadein">
+        <h2>I build AI solutions for healthcare, research & business.</h2>
+
+        <div style="margin-top:8px">
+          <strong style="color:var(--accent)">Open to:</strong>
+          <span style="color:var(--muted)">AI / ML / Data Science roles, internships & research collaborations</span>
+        </div>
+        <div style="height:6px"></div>
+        <p class="fadein">I design and ship end-to-end AI applications — medical imaging tools, RAG-based research assistants, and predictive models that drive decisions. I focus on measurable impact: accuracy, speed, and utility.</p>
+
+        <div class="cta fadein">
+          <a class="btn" href="#projects">See Featured Work</a>
+          <a class="secondary" href="MY_resume.pdf" target="_blank">Download Resume</a>
+        </div>
+
+        <div style="margin-top:18px" class="fadein">
+          <strong style="color:var(--accent)">Looking for:</strong>
+          <span style="color:var(--muted)">AI consulting | Startup collaborations | Research partnerships</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0">Key Highlights</h3>
+        <p style="color:var(--muted);font-size:13px;margin-top:8px">MedMRI AI — 92% detection accuracy | RAG PDF Assistant — 85% semantic relevance | Brain Tumor CNN — 91% accuracy</p>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="assets/pexels-mart-production-7088829.jpg" alt="medmri" style="width:74px;height:74px;object-fit:cover;border-radius:8px">
+          <div>
+            <div style="font-weight:700">MedMRI AI</div>
+            <div style="color:var(--muted);font-size:13px">AI-powered MRI analysis — automates reporting & highlights abnormalities.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <strong style="color:var(--accent)">Skills</strong>
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+            <div class="tag">Python</div>
+            <div class="tag">TensorFlow</div>
+            <div class="tag">LangChain</div>
+            <div class="tag">Streamlit</div>
+            <div class="tag">SQL</div>
+            <div class="tag">Tableau</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="about" style="margin-top:30px">
+        <div class="card">
+          <h2>About Me</h2>
+          <p style="color:var(--muted)">
+            I’m a final year B.Tech (Information Technology) student focused on AI and data science. 
+            I’ve built and deployed end-to-end AI apps like MedMRI AI for brain MRI analysis, 
+            predictive models for healthcare, and interactive BI dashboards. 
+            I enjoy turning raw data into tools that people can actually use.
+          </p>
+        </div>
+      </section>
+
+<!-- Featured Projects -->
+<section id="projects">
+  <h2 style="margin-top:12px">Featured Projects</h2>
+  <div class="projects">
+    
+    <!-- MedMRI AI -->
+    <a class="proj fadein" href="https://majormedmriai.streamlit.app/" target="_blank" rel="noopener">
+      <img src="assets/pexels-mart-production-7088829.jpg" alt="MedMRI">
+      <div class="proj-body">
+        <h3>MedMRI AI</h3>
+        <p>AI-powered MRI analysis app — 92% detection accuracy across 6+ MRI types. Automated PDF reporting reduces time by 70%.</p>
+        <div class="tags">
+          <div class="tag">Healthcare</div><div class="tag">Computer Vision</div><div class="tag">Streamlit</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- PDF Q&A (RAG) -->
+    <a class="proj fadein" href="https://github.com/Felix1kk/PDF-Q-and-A-ChatBot" target="_blank" rel="noopener">
+      <img src="assets/pexels-pixabay-272980.jpg" alt="RAG">
+      <div class="proj-body">
+        <h3>PDF Q&A (RAG)</h3>
+        <p>Retrieval-Augmented Generation system for querying PDFs — 85% semantic relevance, 80% faster search.</p>
+        <div class="tags">
+          <div class="tag">NLP</div><div class="tag">LangChain</div><div class="tag">Llama-2</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Brain Tumor Detection -->
+    <a class="proj fadein" href="https://github.com/Felix1kk/Machine-Learning/blob/main/brain-tumor-detection.ipynb" target="_blank" rel="noopener">
+      <img src="assets/pexels-shvetsa-4226264.jpg" alt="Brain Tumor">
+      <div class="proj-body">
+        <h3>Brain Tumor Detection</h3>
+        <p>CNN-based tumor detection with 91% accuracy — reduces diagnostic errors and improves workflow speed.</p>
+        <div class="tags">
+          <div class="tag">Medical AI</div><div class="tag">TensorFlow</div><div class="tag">OpenCV</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Heart Failure Prediction -->
+    <a class="proj fadein" href="https://github.com/Felix1kk/Machine-Learning/blob/main/Heart%20Failure%20prediction.ipynb" target="_blank" rel="noopener">
+      <img src="assets/pexels-karolina-grabowska-4386467.jpg" alt="Heart Failure">
+      <div class="proj-body">
+        <h3>Heart Failure Prediction</h3>
+        <p>Classification model with F1-score: 0.87, Sensitivity: 83% — assists early risk detection.</p>
+        <div class="tags">
+          <div class="tag">Healthcare</div><div class="tag">Predictive Modeling</div><div class="tag">scikit-learn</div>
+        </div>
+      </div>
+    </a>
+
+
+    <!-- Tableau  -->
+    <a class="proj fadein" href="https://github.com/Felix1kk/Machine-Learning/blob/main/Car%20Price%20Prediction.ipynb" target="_blank" rel="noopener">
+      <img src="assets/pexels-pixabay-164634.jpg" alt="RAG">
+      <div class="proj-body">
+        <h3>Car Price Prediction</h3>
+        <p>Regression model predicting car prices — R²=0.89, RMSE=1500.</p>
+        <div class="tags">
+          <div class="tag">Predictive Modeling</div><div class="tag">scikit-learn</div><div class="tag">Regression</div>
+        </div>
+      </div>
+    </a>
+
+
+    <a class="proj fadein" href="https://github.com/Felix1kk/Machine-Learning/blob/main/House%20Price%20Prediction.ipynb" target="_blank" rel="noopener">
+      <img src="assets/pexels-tobiasbjorkli-2119714.jpg" alt="RAG">
+      <div class="proj-body">
+        <h3>House Price Prediction</h3>
+        <p>Regression model predicting house prices — R²=0.91, RMSE=1500.</p>
+        <div class="tags">
+          <div class="tag">Predictive Modeling</div><div class="tag">scikit-learn</div><div class="tag">Regression</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="proj fadein" href="https://public.tableau.com/app/profile/felix.nwokekeh/viz/financialcomplaint_16917770218430/FinancialComplaintsOverview" target="_blank" rel="noopener">
+      <img src="assets/pexels-goumbik-590022.jpg" alt="RAG">
+      <div class="proj-body">
+        <h3>Financial Complaint Dashboard (Tableau)</h3>
+        <p>Interactive dashboard visualizing financial complaints — empowers data-driven decisions.</p>
+        <div class="tags">
+          <div class="tag">Data Visualization</div><div class="tag">Tableau</div><div class="tag">Business Intelligence</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="proj fadein" href="https://public.tableau.com/app/profile/felix.nwokekeh/viz/IndiaAmazonSales/Dashboard3?publish=yes" target="_blank" rel="noopener">
+      <img src="assets/pexels-shkrabaanthony-5816299.jpg " alt="RAG">
+      <div class="proj-body">
+        <h3>India Amazon Sales Dashboard (Tableau)</h3>
+        <p>Interactive dashboard visualizing Amazon sales in India — empowers data-driven decisions.</p>
+        <div class="tags">
+          <div class="tag">Data Visualization</div><div class="tag">Tableau</div><div class="tag">Business Intelligence</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Other projects -->
+  <div style="margin-top:18px">
+    <h3>More Projects</h3>
+    <div class="other">
+      <a class="small" href="https://github.com/Felix1kk/Machine-Learning/blob/main/Dogs%20and%20Cats%20Classification%20Using%20CNN" target="_blank">Dogs vs Cats Classifier — 96% acc</a>
+      <a class="small" href="https://github.com/felix1kk/Emotion-Recognition" target="_blank">Emotion Recognition — 87% acc</a>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Badges -->
+    <section id="badges" style="margin-top:22px">
+      <h2>Certifications & Badges</h2>
+      <p style="color:var(--muted)">Click a badge to view verification on Credly (or your cert provider).</p>
+      <div class="card">
+        <div class="badges">
+          <!-- Example Credly badge embedding: replace href and src -->
+          <a href="https://credly.com/badges/YOUR_CREDLY_VERIFY_LINK" target="_blank" rel="noopener">
+            <img src="assets/google-data-analytics-professional-certificate.2.png" alt="Google Data Analytics" class="badge-img">
+          </a>
+          <a href="https://www.credly.com/earner/earned/share/2227405a-82be-4874-ab94-1f0f133b12da" target="_blank" rel="noopener">
+            <img src="assets/data-science-professional-certificate.png" alt="IBM Data Science" class="badge-img">
+          </a>
+          
+        </div>
+
+        
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" style="margin-top:22px">
+      <div class="card">
+        <h2>Contact</h2>
+        <p style="color:var(--muted)">I’m available for AI consulting, collaborations, and early-stage startup roles. Let’s talk.</p>
+        <p style="margin-top:8px"><strong>Email:</strong> <a href="mailto:fnwokekeh@gmail.com" style="color:var(--accent)">fnwokekeh@gmail.com</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/felix-nwokekeh-194406229/" style="color:var(--accent)" target="_blank">LinkedIn</a></p>
+        <div style="margin-top:12px"><a class="btn" href="mailto:fnwokekeh@gmail.com">Email Me</a></div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="color:var(--muted)">© Felix Nwokekeh — AI Engineer • Built with care</div>
+    </footer>
+  </div>
+
+  <!-- Modal template -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2 id="modal-title">Project Title</h2>
+        <div class="modal-close" onclick="closeModal()">✕</div>
+      </div>
+      <div id="modal-body" style="color:var(--muted);margin-top:12px">Project details…</div>
+    </div>
+  </div>
+
+  <script>
+    // small UX: open modal with full project text
+    document.querySelectorAll('.proj').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const data = JSON.parse(el.getAttribute('data-proj'));
+        document.getElementById('modal-title').innerText = data.title;
+        document.getElementById('modal-body').innerHTML = `
+          <p style=\"color:var(--muted)\">${data.desc}</p>
+          <p style=\"margin-top:10px;\"><strong>Tech:</strong> ${data.tech}</p>
+        `;
+        document.getElementById('modal').classList.add('open');
+      })
+    })
+    function closeModal(){document.getElementById('modal').classList.remove('open')}
+
+    // small reveal animation
+    document.querySelectorAll('.fadein').forEach((el,i)=>{setTimeout(()=>{el.style.opacity=1;el.style.transform='none';el.classList.remove('fadein')},120*i)})
+
+    // simple typed effect (no lib)
+    const typedEl = document.querySelector('.typed');
+    if(typedEl){
+      const words = ['AI Engineer','Data Scientist','Startup Builder']
+      let i=0,j=0,cur='';
+      function type(){
+        if(j<words[i].length){cur+=words[i][j++];typedEl.innerText=cur;setTimeout(type,80)}else{setTimeout(()=>{erase()},900)}
+      }
+      function erase(){if(cur.length){cur=cur.slice(0,-1);typedEl.innerText=cur;setTimeout(erase,40)}else{i=(i+1)%words.length;j=0;setTimeout(type,200)} }
+      type();
+    }
+  </script>
+</body>
+</html>
